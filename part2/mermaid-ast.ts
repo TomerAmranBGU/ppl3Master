@@ -1,3 +1,10 @@
+import { map } from "ramda";
+import { allT, first, second, rest, isEmpty } from "../shared/list";
+import { isArray, isString, isNumericString, isIdentifier } from "../shared/type-predicates";
+import { parse as p, isSexpString, isToken } from "../shared/parser";
+import { Result, makeOk, makeFailure, bind, mapResult, safe2 } from "../shared/result";
+
+
 /*      MERMAID      */
 // <graph> ::= <header> <graphContent> // Graph(dir: Dir, content: GraphContent)
 // <header> ::= graph (TD|LR)<newline> // Direction can be TD or LR
@@ -52,3 +59,22 @@ export const isEdgeLable = (x: any): x is EdgeLable => x.tag == "EdgeLable";
 export const isGraphContent = (x: any): x is GraphContent => isAtomicGraph(x) || isCompoundGraph(x);
 export const isNode = (x: any): x is Node => isNodeDecl(x) || isNodeRef(x);
 export const isDir = (x: any): x is Dir => isTD(x) || isLR(x);
+
+
+//parsing AST of mermaid to string
+const unparseEdge = () => {};
+const unparseNodeDecl = (exp: NodeDecl) => 
+    `${exp.id}[${exp.lable}]`
+const unparseDir = (exp: Dir):string =>
+    isTD(exp) ? `TD`:
+    'LS'
+const unparseGraphContent = (content: GraphContent): string  =>
+    isAtomicGraph(content) ? unparseNodeDecl(content.nodeDecl):
+    map(unparseEdge,content.edges).join(`\n`)
+
+export const unparseMermaid = (exp: Graph): Result<string> => 
+    makeOk(`graph ${unparseDir(exp.dir)}\n${unparseGraphContent(exp.content)}`)
+
+
+
+console.log(unparseMermaid(makeGraph(makeTD(),makeAtomicGraph(makeNodeDecl(`id`,`lable`)))))
