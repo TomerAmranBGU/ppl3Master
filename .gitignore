@@ -1,0 +1,11 @@
+.vscode/*
+build
+database.sqlite
+node_modules
+*.log
+.DS_Store
+
+*.sh
+
+*stats*
+!browserslist-stats.json
