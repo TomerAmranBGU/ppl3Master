@@ -26,20 +26,20 @@ export interface EdgeLable{tag:"EdgeLable"; id:string}
 export const makeTD = (): TD => ({tag:"TD"});
 export const makeLR = (): LR => ({tag:"LR"});
 export const makeGraph = (dir: Dir , content: GraphContent): Graph => ({tag:"Graph" , dir:dir , content:content});
-export const makeAtomicGraph = (nodeDecl: NodeDecl): AtomicGraph => ({tag:"AtomicGraph", vodeDecl: nodeDecl});
+export const makeAtomicGraph = (nodeDecl: NodeDecl): AtomicGraph => ({tag:"AtomicGraph", nodeDecl: nodeDecl});
 export const makeCompundGraph = (edges: Edge[]): CompoundGraph => ({tag:"CompoundGraph",edges:edges});
-export const makeEdge = (parent: Node,child: Node, lable?: EdgeLable): Edge => ({tag:"Edge", child:child, lable:lable});
-export const makeNodeDecl = (): => ({});
-export const makeNodeRef = (): => ({});
-export const makeEdgeLable = (): => ({});
+export const makeEdge = (parent: Node, child: Node, lable?: EdgeLable): Edge => ({tag:"Edge", parent:parent, child:child, lable:lable});
+export const makeNodeDecl = (id: string, lable: string): NodeDecl => ({tag:"NodeDecl", id: id, lable: lable});
+export const makeNodeRef = (id:string): NodeRef => ({tag:"NodeRef", id:id});
+export const makeEdgeLable = (id:string): EdgeLable=> ({tag:"EdgeLable", id:id});
 
 
-export const isGraph = (o : any): => o.tag == "Graph";
-export const isTD = (o: any) => o.tag == "TD";
-export const isLR = (o: any) => o.tag == "LR";
-export const isAtomicGraph = (o: any) => o.tag == "AtomicGraph";
-export const isCompundGraph = (o: any) => o.tag == "CompundGraph";
-export const isNodeDecl = (o: any) => o.tag == "NodeDecl";
-export const isNodeRef = (o: any) => o.tag == "NodeRef";
-export const isEdge = (o: any) => o.tag == "Edge";
-export const isEdgeLable = (o: any) => o.tag == "EdgeLable";
+export const isGraph = (x : any): x is Graph=> x.tag == "Graph";
+export const isTD = (x: any): x is TD => x.tag == "TD";
+export const isLR = (x: any) => x.tag == "LR";
+export const isAtomicGraph = (x: any) => x.tag == "AtomicGraph";
+export const isCompundGraph = (x: any) => x.tag == "CompundGraph";
+export const isNodeDecl = (x: any) => x.tag == "NodeDecl";
+export const isNodeRef = (x: any) => x.tag == "NodeRef";
+export const isEdge = (x: any) => x.tag == "Edge";
+export const isEdgeLable = (x: any) => x.tag == "EdgeLable";
