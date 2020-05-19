@@ -62,8 +62,15 @@ export const isDir = (x: any): x is Dir => isTD(x) || isLR(x);
 
 
 //parsing AST of mermaid to string
-const unparseEdge = () => {};
-const unparseNodeDecl = (exp: NodeDecl) => 
+const unparseEdgeLable= (exp: EdgeLable): string => `${exp.id}`
+const unparseEdge = (exp: Edge) => 
+    (exp.lable == undefined) ? `${unparseNode(exp.parent)}-->${unparseNode(exp.child)}`:
+    `${unparseNode(exp.parent)}-->|${unparseEdgeLable(exp.lable)}|${unparseNode(exp.child)}`
+const unparseNode = (exp: Node):  string =>
+    isNodeDecl(exp) ? unparseNodeDecl(exp):
+    unparseNodeRef(exp)
+const unparseNodeRef = (exp : NodeRef): string => `${exp.id}`
+const unparseNodeDecl = (exp: NodeDecl): string => 
     `${exp.id}[${exp.lable}]`
 const unparseDir = (exp: Dir):string =>
     isTD(exp) ? `TD`:
@@ -76,5 +83,8 @@ export const unparseMermaid = (exp: Graph): Result<string> =>
     makeOk(`graph ${unparseDir(exp.dir)}\n${unparseGraphContent(exp.content)}`)
 
 
-
-console.log(unparseMermaid(makeGraph(makeTD(),makeAtomicGraph(makeNodeDecl(`id`,`lable`)))))
+const x =unparseMermaid(makeGraph(makeTD(),makeCompoundGraph(
+    [makeEdge(makeNodeDecl("NODE_1","x"),makeNodeDecl("NODE_2","y"), makeEdgeLable("x->y")),
+    makeEdge(makeNodeRef("NODE_1"),makeNodeDecl("NODE_3","z"), makeEdgeLable("x->z"))
+])));
+bind(x, (y) => makeOk(console.log(y)))
