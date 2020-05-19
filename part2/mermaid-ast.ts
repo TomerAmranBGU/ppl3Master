@@ -27,7 +27,7 @@ export const makeTD = (): TD => ({tag:"TD"});
 export const makeLR = (): LR => ({tag:"LR"});
 export const makeGraph = (dir: Dir , content: GraphContent): Graph => ({tag:"Graph" , dir:dir , content:content});
 export const makeAtomicGraph = (nodeDecl: NodeDecl): AtomicGraph => ({tag:"AtomicGraph", nodeDecl: nodeDecl});
-export const makeCompundGraph = (edges: Edge[]): CompoundGraph => ({tag:"CompoundGraph",edges:edges});
+export const makeCompoundGraph = (edges: Edge[]): CompoundGraph => ({tag:"CompoundGraph",edges:edges});
 export const makeEdge = (parent: Node, child: Node, lable?: EdgeLable): Edge => ({tag:"Edge", parent:parent, child:child, lable:lable});
 export const makeNodeDecl = (id: string, lable: string): NodeDecl => ({tag:"NodeDecl", id: id, lable: lable});
 export const makeNodeRef = (id:string): NodeRef => ({tag:"NodeRef", id:id});
@@ -36,10 +36,10 @@ export const makeEdgeLable = (id:string): EdgeLable=> ({tag:"EdgeLable", id:id})
 
 export const isGraph = (x : any): x is Graph=> x.tag == "Graph";
 export const isTD = (x: any): x is TD => x.tag == "TD";
-export const isLR = (x: any) => x.tag == "LR";
-export const isAtomicGraph = (x: any) => x.tag == "AtomicGraph";
-export const isCompundGraph = (x: any) => x.tag == "CompundGraph";
-export const isNodeDecl = (x: any) => x.tag == "NodeDecl";
-export const isNodeRef = (x: any) => x.tag == "NodeRef";
-export const isEdge = (x: any) => x.tag == "Edge";
-export const isEdgeLable = (x: any) => x.tag == "EdgeLable";
+export const isLR = (x: any): x is LR => x.tag == "LR";
+export const isAtomicGraph = (x: any): x is AtomicGraph => x.tag == "AtomicGraph";
+export const isCompoundGraph = (x: any): x is CompoundGraph => x.tag == "CompundGraph";
+export const isNodeDecl = (x: any): x is NodeDecl => x.tag == "NodeDecl";
+export const isNodeRef = (x: any): x is NodeRef => x.tag == "NodeRef";
+export const isEdge = (x: any): x is Edge => x.tag == "Edge";
+export const isEdgeLable = (x: any): x is EdgeLable => x.tag == "EdgeLable";
