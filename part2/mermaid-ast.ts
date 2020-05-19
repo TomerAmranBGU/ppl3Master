@@ -73,8 +73,7 @@ const unparseNodeRef = (exp : NodeRef): string => `${exp.id}`
 const unparseNodeDecl = (exp: NodeDecl): string => 
     `${exp.id}[${exp.lable}]`
 const unparseDir = (exp: Dir):string =>
-    isTD(exp) ? `TD`:
-    'LS'
+    isTD(exp) ? `TD`: 'LS'
 const unparseGraphContent = (content: GraphContent): string  =>
     isAtomicGraph(content) ? unparseNodeDecl(content.nodeDecl):
     map(unparseEdge,content.edges).join(`\n`)
@@ -82,9 +81,9 @@ const unparseGraphContent = (content: GraphContent): string  =>
 export const unparseMermaid = (exp: Graph): Result<string> => 
     makeOk(`graph ${unparseDir(exp.dir)}\n${unparseGraphContent(exp.content)}`)
 
-
+//****TEST****//
 const x =unparseMermaid(makeGraph(makeTD(),makeCompoundGraph(
-    [makeEdge(makeNodeDecl("NODE_1","x"),makeNodeDecl("NODE_2","y"), makeEdgeLable("x->y")),
+    [makeEdge(makeNodeDecl("NODE_1","x"),makeNodeDecl("NODE_2","y")),
     makeEdge(makeNodeRef("NODE_1"),makeNodeDecl("NODE_3","z"), makeEdgeLable("x->z"))
 ])));
 bind(x, (y) => makeOk(console.log(y)))
